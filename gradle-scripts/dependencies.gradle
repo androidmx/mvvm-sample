@@ -1,0 +1,69 @@
+ext {
+
+    versions = [
+            kotlin:                 '1.1.51',
+            gradle:                 '3.1.3',
+            compileSdk:             27,
+            minSdk:                 19,
+            targetSdk:              27,
+            buildTools:             '27.0.3',
+
+            // android support
+            support:                '27.1.1',
+            supportConstraint:      '1.1.2',
+
+            // android lifecycle
+            // android lifecycle
+            lifecycle:              '1.1.1',
+
+            // testing
+            junit:                  '4.12',
+            runner:                 '1.0.2',
+            espresso:               '3.0.2',
+
+            // 3rd
+            retrofit:               '2.3.0',
+            rxAndroid:              '2.0.2',
+            rxJava:                 '2.1.7',
+            okhttp:                 '3.7.0',
+            loginInterceptor:       '2.0.7',
+            picasso:                '2.71828',
+    ]
+
+    libraries = [
+            gradlePlugin:           buildDependency('com.android.tools.build', 'gradle', versions.gradle),
+            kotlin:                 buildDependency('org.jetbrains.kotlin', 'kotlin-stdlib-jre7', versions.kotlin),
+            kotlinPlugin:           buildDependency('org.jetbrains.kotlin', 'kotlin-gradle-plugin', versions.kotlin),
+
+            // android support
+            supportDesign:          buildDependency('com.android.support', 'design', versions.support),
+            supportRecyclerView:    buildDependency('com.android.support', 'recyclerview-v7', versions.support),
+            supportCardView:        buildDependency('com.android.support', 'cardview-v7', versions.support),
+            supportAppCompat:       buildDependency('com.android.support', 'appcompat-v7', versions.support),
+            supportConstraint:      buildDependency('com.android.support.constraint', 'constraint-layout', versions.supportConstraint),
+
+            // android lifecycle
+            lifecycleExtensions:    buildDependency('android.arch.lifecycle', 'extensions', versions.lifecycle),
+            lifecycleViewmodel:     buildDependency('android.arch.lifecycle', 'viewmodel', versions.lifecycle),
+
+            // testing
+            junit:                  buildDependency('junit', 'junit', versions.junit),
+            runner:                 buildDependency('com.android.support.test', 'runner', versions.runner),
+            espresso:               buildDependency('com.android.support.test.espresso', 'espresso-core', versions.espresso),
+
+            // 3rd
+            retrofit:               buildDependency('com.squareup.retrofit2', 'retrofit', versions.retrofit),
+            gson:                   buildDependency('com.squareup.retrofit2', 'converter-gson', versions.retrofit),
+            rxAdapterJava:          buildDependency('com.squareup.retrofit2', 'adapter-rxjava2', versions.retrofit),
+            rxAndroid:              buildDependency('io.reactivex.rxjava2', 'rxandroid', versions.rxAndroid),
+            rxJava:                 buildDependency('io.reactivex.rxjava2','rxjava', versions.rxJava),
+            okhttp:                 buildDependency('com.squareup.okhttp3','okhttp', versions.okhttp),
+            loginInterceptor:       buildDependency('com.github.ihsanbal','LoggingInterceptor', versions.loginInterceptor),
+            picasso:                buildDependency('com.squareup.picasso','picasso', versions.picasso),
+    ]
+
+}
+
+static String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
