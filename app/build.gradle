@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -45,6 +46,11 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     implementation libraries.picasso
+
+    // Data binding
+    kapt "com.android.databinding:compiler:3.1.3"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // testing
     testImplementation libraries.junit

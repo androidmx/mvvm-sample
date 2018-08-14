@@ -10,7 +10,6 @@ import io.reactivex.disposables.Disposable
  * @since 0.0.1
  */
 interface UserRepository {
-    fun getAllCompositeDisposables(): List<Disposable>
     fun getListUsers(page: Int, perPage: Int): LiveData<List<User>>
     fun getSingleUser(userId: Int): LiveData<User>
 }

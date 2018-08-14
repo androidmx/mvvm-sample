@@ -3,6 +3,7 @@ package com.gigigo.mvvm.data.remote
 import com.gigigo.mvvm.BuildConfig
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
+import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit
 interface RestService {
 
     @GET("/api/users/")
-    fun getListUsers(@Query("page") page: Int, @Query("per_page") perPage: Int): Single<UserModel.ListUsers>
+    fun getListUsers(@Query("page") page: Int, @Query("per_page") perPage: Int): Observable<UserModel.ListUsers>
 
     @GET("/api/users/{userId}")
     fun getSingleUser(@Path("userId") userId: Int): Single<UserModel.SingleUser>

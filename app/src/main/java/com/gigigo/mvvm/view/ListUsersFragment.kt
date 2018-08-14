@@ -2,6 +2,7 @@ package com.gigigo.mvvm.view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.gigigo.mvvm.R
 import com.gigigo.mvvm.core.EndlessScrollListener
+import com.gigigo.mvvm.databinding.ListUsersFragmentBinding
 import com.gigigo.mvvm.view.adapter.ListUsersAdapter
 import com.gigigo.mvvm.viewmodel.ListUsersViewModel
 import kotlinx.android.synthetic.main.list_users_fragment.*
@@ -33,6 +35,9 @@ class ListUsersFragment: Fragment() {
     private lateinit var adapter: ListUsersAdapter
     private lateinit var endlessScrollListener: EndlessScrollListener
 
+    private lateinit var binding: ListUsersFragmentBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
@@ -40,7 +45,13 @@ class ListUsersFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.list_users_fragment, container, false)
+
+        binding = DataBindingUtil.inflate<ListUsersFragmentBinding>(inflater,
+                        R.layout.list_users_fragment,
+                        container,
+                        false)
+        //return inflater.inflate(R.layout.list_users_fragment, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
