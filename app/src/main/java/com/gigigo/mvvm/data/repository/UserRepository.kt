@@ -1,8 +1,7 @@
 package com.gigigo.mvvm.data.repository
 
-import android.arch.lifecycle.LiveData
 import com.gigigo.mvvm.model.User
-import io.reactivex.disposables.Disposable
+import io.reactivex.Observable
 
 /**
  * @author JG - August 01, 2018
@@ -10,6 +9,6 @@ import io.reactivex.disposables.Disposable
  * @since 0.0.1
  */
 interface UserRepository {
-    fun getListUsers(page: Int, perPage: Int): LiveData<List<User>>
-    fun getSingleUser(userId: Int): LiveData<User>
+    fun getListUsers(page: Int, perPage: Int): Observable<List<User>>
+    fun getSingleUser(userId: Int): User
 }

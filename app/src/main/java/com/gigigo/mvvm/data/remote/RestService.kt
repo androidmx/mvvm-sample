@@ -1,11 +1,15 @@
 package com.gigigo.mvvm.data.remote
 
+import com.gigigo.mvvm.App
 import com.gigigo.mvvm.BuildConfig
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -38,8 +42,12 @@ interface RestService {
                     .response("Response")
                     .build()
 
+            var network = DefaultNetwork(App.applicationContext())
+            var networkInterceptor = DefaultNetworkRequestInterceptor(network)
+
             val client = OkHttpClient().newBuilder()
                     .addInterceptor(loggingInterceptor)
+                    .addInterceptor(networkInterceptor)
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(15, TimeUnit.SECONDS)
                     .writeTimeout(15, TimeUnit.SECONDS)
@@ -57,5 +65,12 @@ interface RestService {
         }
     }
 
+    class DefaultNetworkRequestInterceptor(network: Network): NetworkRequestInterceptor(network) {
 
+        override fun interceptResponse(chain: Interceptor.Chain): Response {
+            val request: Request = chain.request()
+
+            return chain.proceed(request)
+        }
+    }
 }

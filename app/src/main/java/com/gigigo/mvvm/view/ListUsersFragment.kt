@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import android.widget.Toast
 import com.gigigo.mvvm.R
 import com.gigigo.mvvm.core.EndlessScrollListener
 import com.gigigo.mvvm.databinding.ListUsersFragmentBinding
@@ -98,10 +101,18 @@ class ListUsersFragment: Fragment() {
             endlessScrollListener.resetState()
             populateRecycler(PAGE, PER_PAGE)
         }
+
+        viewModel.error.observe(this, Observer {
+            t: Throwable? -> showError(t?.message!!)
+            swipe_refresh_layout.isRefreshing = false
+        })
+
+        viewModel.isLoading.observe(this, Observer {
+            swipe_refresh_layout.isRefreshing = it!!
+        })
     }
 
     private fun populateRecycler(page: Int, perPage: Int) {
-        swipe_refresh_layout.isRefreshing = true
         viewModel.getListUsers(page, perPage).observe(this, Observer {
             if (adapter.itemCount == 0) {
                 adapter.data = it?.toMutableList()!!
@@ -112,8 +123,14 @@ class ListUsersFragment: Fragment() {
             } else {
                 adapter.addAll(it!!)
             }
-
-            swipe_refresh_layout.isRefreshing = false
         })
+    }
+
+    private fun showError(message: String){
+        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
+        val textView = snackBar.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        textView.maxLines = 5
+        snackBar.setAction(R.string.retry, { populateRecycler(PAGE, PER_PAGE) })
+        snackBar.show()
     }
 }
