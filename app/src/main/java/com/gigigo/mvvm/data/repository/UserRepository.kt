@@ -1,6 +1,6 @@
 package com.gigigo.mvvm.data.repository
 
-import com.gigigo.mvvm.model.User
+import com.gigigo.mvvm.data.room.UserEntity
 import io.reactivex.Observable
 
 /**
@@ -9,6 +9,6 @@ import io.reactivex.Observable
  * @since 0.0.1
  */
 interface UserRepository {
-    fun getListUsers(page: Int, perPage: Int): Observable<List<User>>
-    fun getSingleUser(userId: Int): User
+    fun getListUsers(page: Int, perPage: Int): Observable<List<UserEntity>>
+    fun getSingleUser(userId: Int): UserEntity
 }

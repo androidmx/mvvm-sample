@@ -1,4 +1,4 @@
-package com.gigigo.mvvm
+package com.gigigo.mvvm.core
 
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Function

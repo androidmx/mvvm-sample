@@ -2,6 +2,8 @@ package com.gigigo.mvvm.data.remote
 
 import com.gigigo.mvvm.App
 import com.gigigo.mvvm.BuildConfig
+import com.gigigo.mvvm.core.DefaultNetwork
+import com.gigigo.mvvm.core.NetworkRequestInterceptor
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import io.reactivex.Observable

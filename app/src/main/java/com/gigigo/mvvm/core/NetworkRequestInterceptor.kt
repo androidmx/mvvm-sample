@@ -1,4 +1,4 @@
-package com.gigigo.mvvm.data.remote
+package com.gigigo.mvvm.core
 
 import okhttp3.Interceptor
 import okhttp3.Response

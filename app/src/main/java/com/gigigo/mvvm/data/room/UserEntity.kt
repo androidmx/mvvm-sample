@@ -13,4 +13,9 @@ import android.arch.persistence.room.ColumnInfo
 class UserEntity(@PrimaryKey(autoGenerate = false) val id: Int = 0,
                  @ColumnInfo(name = "first_name") val firstName: String,
                  @ColumnInfo(name = "last_name") val lastName: String,
-                 @ColumnInfo(name = "avatar") val avatar: String)
+                 @ColumnInfo(name = "avatar") val avatar: String) {
+
+    fun getFullName(): String {
+        return "$lastName $lastName"
+    }
+}

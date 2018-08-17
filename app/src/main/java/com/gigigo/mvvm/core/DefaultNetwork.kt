@@ -1,10 +1,9 @@
-package com.gigigo.mvvm.data.remote
+package com.gigigo.mvvm.core
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.util.Log
 import java.io.IOException
 import java.net.InetAddress

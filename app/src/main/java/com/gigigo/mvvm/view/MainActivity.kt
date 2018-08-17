@@ -1,9 +1,8 @@
-package com.gigigo.mvvm
+package com.gigigo.mvvm.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.gigigo.mvvm.view.ListUsersFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.gigigo.mvvm.R
 
 class MainActivity : AppCompatActivity() {
 

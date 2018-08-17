@@ -2,14 +2,14 @@ package com.gigigo.mvvm.viewmodel
 
 import android.arch.lifecycle.*
 import android.arch.lifecycle.Lifecycle.Event.ON_DESTROY
-import android.arch.persistence.room.Room
 import com.gigigo.mvvm.App
-import com.gigigo.mvvm.ErrorHandling
+import com.gigigo.mvvm.core.ErrorHandling
 import com.gigigo.mvvm.data.remote.RestService
 import com.gigigo.mvvm.data.repository.UserRepository
 import com.gigigo.mvvm.data.repository.UserRepositoryImp
+import com.gigigo.mvvm.data.room.UserDao
 import com.gigigo.mvvm.data.room.UserDataBase
-import com.gigigo.mvvm.model.User
+import com.gigigo.mvvm.data.room.UserEntity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,8 +20,9 @@ import io.reactivex.schedulers.Schedulers
  * @since 0.0.1
  */
 class ListUsersViewModel: ViewModel(), LifecycleObserver {
-    private val userDataBase: UserDataBase = Room.databaseBuilder(App.applicationContext(), UserDataBase::class.java, "mvvm-database").build()
-    private val userRepository: UserRepository = UserRepositoryImp(RestService.create(), userDataBase.userDao())
+    private val userDao: UserDao = UserDataBase.getInstance(App.applicationContext()).userDao()
+    private val restService: RestService = RestService.create()
+    private val userRepository: UserRepository = UserRepositoryImp(restService, userDao)
 
 
     private val compositeDisposable = CompositeDisposable()
@@ -29,11 +30,11 @@ class ListUsersViewModel: ViewModel(), LifecycleObserver {
     val error: MutableLiveData<Throwable> = MutableLiveData()
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun getListUsers(page: Int, perPage: Int): LiveData<List<User>> {
+    fun getListUsers(page: Int, perPage: Int): LiveData<List<UserEntity>> {
         isLoading.value = true
-        val mutableLiveData = MutableLiveData<List<User>>()
+        val mutableLiveData = MutableLiveData<List<UserEntity>>()
         val disposable = userRepository.getListUsers(page, perPage)
-                .onErrorResumeNext(ErrorHandling<List<User>>(DefaultError::class.java))
+                .onErrorResumeNext(ErrorHandling<List<UserEntity>>(DefaultError::class.java))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
